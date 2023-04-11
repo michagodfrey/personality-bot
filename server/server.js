@@ -17,8 +17,8 @@ app.use(express.json());
 
 app.get('/', async (req, res) => {
     res.status(200).send({
-        message: 'Hello world',
-    })
+      message: "Go to https://michagodfrey.github.io/personality-bot",
+    });
 });
 
 app.post('/', async (req, res) => {
@@ -45,4 +45,6 @@ app.post('/', async (req, res) => {
     }
 });
 
-app.listen(5000, () => console.log('Server is listening on port 5000'));
+app.listen(5000, () =>
+  console.log("Server is listening on https://personality-bot.onrender.com/")
+);
