@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <h1>Personality Bots!</h1>
+    <p>Choose a bot personality to deliver responses</p>
+
+    <ul class="mobile-images">
+      <li id="robot">
+        <img src="images/robot-response.webp" alt="robot">
+        <p>Robot</p>
+      </li>
+      <li id="superhero">
+        <img src="images/superhero-response.webp" alt="superhero">
+        <p>Superhero</p>
+      </li>
+      <li id="pirate">
+        <img src="images/pirate-response.webp" alt="pirate">
+        <p>Pirate</p>
+      </li>
+      <li id="hippie">
+        <img src="images/hippie-response.webp" alt="hippie">
+        <p>Hippie</p>
+      </li>
+      <li id="yoda">
+        <img src="images/yoda-response.webp" alt="Yoda">
+        <p>Yoda</p>
+      </li>
+    </ul>
+    
+    <div id="app">
+      <div id="chat_container"></div>
+      <form>
+        <p id="personality-selected"></p>
+        <input type="text" name="personality" class="personality" />
+        <div class="form-inputs">
+          <textarea name="prompt" rows="1" col="1" placeholder="Ask the personality bot..."></textarea>
+          <button type="submit">Go!</button>
+        </div>
+      </form>
+    </div>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
