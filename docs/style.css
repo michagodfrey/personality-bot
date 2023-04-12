@@ -146,8 +146,16 @@ form {
   gap: 10px;
 }
 
+input {
+  background: #40414f;
+  border: none;
+  color: #fbfbfb;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 .personality {
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 .form-inputs {

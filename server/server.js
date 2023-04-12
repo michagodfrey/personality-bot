@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.get('/', async (req, res) => {
     res.status(200).send({
-      message: "Go to https://michagodfrey.github.io/personality-bot",
+      message: "Go to https://personality-bot.vercel.app/",
     });
 });
 
@@ -29,10 +29,10 @@ app.post('/', async (req, res) => {
         const response = await openai.createCompletion({
           model: "text-davinci-003",
           prompt: `Answer the prompt as if you are a ${personality}. Prompt: ${prompt}`,
-          temperature: 0.8, // 0 - 1, higher = more random, lower = more repetative
-          max_tokens: 1000, // 1 token = 4 chars approx. Max tokens = 2048
-          top_p: 1, // 0 - 1 something about controling diversity via nucleus sampling ???
-          frequency_penalty: 0.5, // 0 - 2, higher values make the bot less repetative 
+          temperature: 1.0, // 0 - 1, higher = more random, lower = more repetative
+          max_tokens: 2048, // 1 token = 4 chars approx. Max tokens = 2048
+          top_p: 0, // 0 - 1 something about controling diversity via nucleus sampling ???
+          frequency_penalty: 0, // 0 - 2, higher values make the bot less repetative 
           presence_penalty: 0, // 0 -2 Increases the likelihood to talk about new topics
         });
 

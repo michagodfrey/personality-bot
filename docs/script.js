@@ -8,50 +8,27 @@ import userImg from "./images/user-svgrepo-com.svg";
 const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
 
-const robot = document.querySelector('#robot')
-const superhero = document.querySelector("#superhero");
-const pirate = document.querySelector("#pirate");
-const hippie = document.querySelector("#hippie");
-const yoda = document.querySelector("#yoda");
-const personalitySelected = document.querySelector("#personality-selected");
-const personalityInput = document.querySelector('.personality');
+const personalityInput = document.querySelector('input');
 
-let personality = 'robot';
+const personalities = [
+  { name: "robot", img: robotImg, value: "Robot" },
+  { name: "superhero", img: superheroImg, value: "Superhero" },
+  { name: "pirate", img: pirateImg, value: "Pirate" },
+  { name: "hippie", img: hippieImg, value: "Hippie" },
+  { name: "yoda", img: yodaImg, value: "Yoda" },
+];
+
 let botImg = robotImg;
 let loadInterval;
 
-personalitySelected.innerHTML = 'Robot';
-personalityInput.value = "robot";
+personalityInput.value = "Robot";
 
-robot.addEventListener('click', () => {
-  botImg = robotImg;
-  personality = 'robot';
-  personalitySelected.innerHTML = 'Robot';
-  personalityInput.value = "robot";
-});
-superhero.addEventListener("click", () => {
-  botImg = superheroImg;
-  personality = "superhero";
-  personalitySelected.innerHTML = "Superhero";
-  personalityInput.value = "superhero";
-});
-pirate.addEventListener("click", () => {
-  botImg = pirateImg;
-  personality = "pirate";
-  personalitySelected.innerHTML = "Pirate";
-  personalityInput.value = "pirate";
-});
-hippie.addEventListener("click", () => {
-  botImg = hippieImg;
-  personality = "hippie";
-  personalitySelected.innerHTML = "Hippie";
-  personalityInput.value = "hippie";
-});
-yoda.addEventListener("click", () => {
-  botImg = yodaImg;
-  personality = "yoda";
-  personalitySelected.innerHTML = "Yoda";
-  personalityInput.value = "Yoda";
+personalities.forEach((personalityObj) => {
+  const personalityButton = document.getElementById(personalityObj.name);
+  personalityButton.addEventListener("click", () => {
+    botImg = personalityObj.img;
+    personalityInput.value = personalityObj.value;
+  });
 });
 
 function loader(element) {
