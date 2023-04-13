@@ -45,6 +45,6 @@ app.post('/', async (req, res) => {
     }
 });
 
-app.listen(5000, () =>
-  console.log("Server is listening on https://personality-bot.onrender.com/")
-);
+// app.listen(5000, () =>
+//   console.log("Server is listening on port 5000")
+// );

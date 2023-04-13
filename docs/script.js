@@ -7,15 +7,14 @@ import userImg from "./images/user-svgrepo-com.svg";
 
 const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
-
 const personalityInput = document.querySelector('input');
 
 const personalities = [
-  { name: "robot", img: robotImg, value: "Robot" },
-  { name: "superhero", img: superheroImg, value: "Superhero" },
-  { name: "pirate", img: pirateImg, value: "Pirate" },
-  { name: "hippie", img: hippieImg, value: "Hippie" },
-  { name: "yoda", img: yodaImg, value: "Yoda" },
+  { name: "Robot", img: robotImg },
+  { name: "Superhero", img: superheroImg },
+  { name: "Pirate", img: pirateImg },
+  { name: "Hippie", img: hippieImg },
+  { name: "Yoda", img: yodaImg },
 ];
 
 let botImg = robotImg;
@@ -27,7 +26,7 @@ personalities.forEach((personalityObj) => {
   const personalityButton = document.getElementById(personalityObj.name);
   personalityButton.addEventListener("click", () => {
     botImg = personalityObj.img;
-    personalityInput.value = personalityObj.value;
+    personalityInput.value = personalityObj.name;
   });
 });
 
