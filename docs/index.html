@@ -4,44 +4,50 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="output.css" />
     <title>Personality Bot</title>
   </head>
-  <body>
-    <h1>Personality Bots!</h1>
-    <p>Choose a bot personality to deliver responses</p>
+  <body class="bg-[#343541] text-[#fbfbfb] font-sans box-border">
+    <h1 class="text-center">Personality Bots!</h1>
+    <p class="text-center">Choose a bot personality to deliver responses</p>
 
-    <ul class="mobile-images">
-      <li id="Robot">
-        <img src="images/robot-response.webp" alt="robot">
+    <ul class="flex justify-evenly flex-wrap mt-6">
+      <li id="Robot" class="text-center font-bold cursor-pointer">
+        <img src="images/robot-response.webp" alt="robot" class="rounded-lg" />
         <p>Robot</p>
       </li>
-      <li id="Superhero">
-        <img src="images/superhero-response.webp" alt="superhero">
+      <li id="Superhero" class="text-center font-bold cursor-pointer">
+        <img src="images/superhero-response.webp" alt="superhero" class="rounded-lg" />
         <p>Superhero</p>
       </li>
-      <li id="Pirate">
-        <img src="images/pirate-response.webp" alt="pirate">
+      <li id="Pirate" class="text-center font-bold cursor-pointer">
+        <img src="images/pirate-response.webp" alt="pirate" class="rounded-lg" />
         <p>Pirate</p>
       </li>
-      <li id="Hippie">
-        <img src="images/hippie-response.webp" alt="hippie">
+      <li id="Hippie" class="text-center font-bold cursor-pointer">
+        <img src="images/hippie-response.webp" alt="hippie" class="rounded-lg" />
         <p>Hippie</p>
       </li>
-      <li id="Yoda">
-        <img src="images/yoda-response.webp" alt="Yoda">
+      <li id="Yoda" class="text-center font-bold cursor-pointer">
+        <img src="images/yoda-response.webp" alt="Yoda" class="rounded-lg" />
         <p>Yoda</p>
       </li>
     </ul>
-    
-    <div id="app">
-      <div id="chat_container"></div>
-      <form>
+
+    <div id="app" class="felx flex-col items-center justify-between">
+      <div id="chat_container" class="w-full h-full"></div>
+      <form class="w-full max-w-screen-xl p-5 bg-[#40414f] flex flex-col gap-2.5">
         <p id="personality-selected"></p>
-        <input type="text" name="personality" />
-        <div class="form-inputs">
-          <textarea name="prompt" rows="1" col="1" placeholder="Ask the personality bot..."></textarea>
-          <button type="submit">Go!</button>
+        <input class="bg-[#40414f] border-none text-2xl text-center" type="text" name="personality" />
+        <div class="flex">
+          <textarea
+            class="w-full text-lg p-5 bg-transparent rounded-lg border border-[#fbfbfb] mr-4"
+            name="prompt"
+            rows="1"
+            col="1"
+            placeholder="Ask the personality bot..."
+          ></textarea>
+          <button type="submit" class="bg-[gold] rounded-lg text-[#0b0b0b] font-bold min-w-[72px]">Go!</button>
         </div>
       </form>
     </div>

@@ -3,7 +3,7 @@ import superheroImg from "/images/superhero-response.webp";
 import pirateImg from "/images/pirate-response.webp";
 import hippieImg from "/images/hippie-response.webp";
 import yodaImg from "/images/yoda-response.webp";
-import userImg from "./images/user-svgrepo-com.svg";
+import userImg from "/images/user-svgrepo-com.svg";
 
 const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
@@ -65,12 +65,12 @@ function generateUniqueId() {
 
 function chatStripe (isAi, value, uniqueId) {
   return (
-    `<div class="wrapper ${isAi && 'ai'}">
-      <div class="chat">
-        <div class="profile">
-          <img src="${isAi ? botImg : userImg}" alt="${isAi ? 'bot' : 'user'}" />
+    `<div class="w-full p-4 ${isAi && 'bg-[#40414f]'}">
+      <div class="w-full max-w-screen-xl flex items-start gap-2.5">
+        <div class="w-9 h-9 rounded-lg ${isAi ? 'bg-[#5436da]' : 'bg-[#10a37f]' }  flex justify-center items-center">
+          <img class="object-contain w-[60%] h-[60%]" src="${isAi ? botImg : userImg}" alt="${isAi ? 'bot' : 'user'}" />
         </div>
-        <div class="message" id="${uniqueId}">${value}</div>
+        <div class="text-xl max-w-full overflow-x-scroll whitespace-pre-wrap" id="${uniqueId}">${value}</div>
       </div>
     </div>`
   )
