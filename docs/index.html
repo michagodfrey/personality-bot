@@ -8,38 +8,57 @@
     <title>Personality Bot</title>
   </head>
   <body class="bg-[#343541] text-[#fbfbfb] font-sans box-border">
-    <h1 class="text-center">Personality Bots!</h1>
-    <p class="text-center">Choose a bot personality to deliver responses</p>
+    <h1 class="text-center mt-8 text-4xl">Personality Bots!</h1>
+    <p class="text-center text-lg mb-8 mx-8">Choose a personality to get responses from ChatGPT in that style.</p>
 
-    <ul class="flex justify-evenly flex-wrap mt-6">
-      <li id="Robot" class="text-center font-bold cursor-pointer">
-        <img src="images/robot-response.webp" alt="robot" class="rounded-lg" />
+    <div class="m-auto relative overflow-hidden w-[341px]">
+      <button class="absolute flex top-0 bottom-0 left-0 pt-1.5 pl-1 rounded-tr-full rounded-br-full m-auto h-16 w-8 bg-[#fbfbfb] text-5xl text-[#0b0b0b] opacity-50 hover:opacity-100 transition-opacity" id="slide-arrow-prev">&#8249;</button>
+      <button class="absolute flex top-0 bottom-0 right-0 pt-1.5 pl-3 rounded-tl-full rounded-bl-full m-auto h-16 w-8 bg-[#fbfbfb] text-5xl text-[#0b0b0b] opacity-50 hover:opacity-100 transition-opacity" id="slide-arrow-next">&#8250;</button>
+      
+      <ul class="slides-container w-full flex whitespace-nowrap overflow-auto scroll-smooth" id="slides-container">
+        <li class="slide flex flex-[1_0_100%]">
+          <img class="rounded-lg" src="/images/robot.webp" alt="robot"/>
+        </li>
+        <li class="slide m-auto flex-[1_0_100%]">
+          <img class="rounded-lg" src="/images/superhero.webp" alt="superhero"/>
+        </li>
+        <li class="slide m-auto flex-[1_0_100%]">
+          <img class="rounded-lg" src="/images/pirate.webp" alt="pirate"/>
+        </li>
+        <li class="slide m-auto flex-[1_0_100%]">
+          <img class="rounded-lg" src="/images/hippie.webp" alt="hippie"/>
+        </li>
+        <li class="slide m-auto flex-[1_0_100%]">
+          <img class="rounded-lg" src="/images/yoda.webp" alt="yoda"/>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="tabs-container flex justify-between flex-wrap my-6 px-5 w-full max-w-screen-xl m-auto">
+      <li id="Robot" class="active tab text-center font-bold cursor-pointer">
         <p>Robot</p>
       </li>
-      <li id="Superhero" class="text-center font-bold cursor-pointer">
-        <img src="images/superhero-response.webp" alt="superhero" class="rounded-lg" />
+      <li id="Superhero" class="tab text-center font-bold cursor-pointer">
         <p>Superhero</p>
       </li>
-      <li id="Pirate" class="text-center font-bold cursor-pointer">
-        <img src="images/pirate-response.webp" alt="pirate" class="rounded-lg" />
+      <li id="Pirate" class="tab text-center font-bold cursor-pointer">
         <p>Pirate</p>
       </li>
-      <li id="Hippie" class="text-center font-bold cursor-pointer">
-        <img src="images/hippie-response.webp" alt="hippie" class="rounded-lg" />
+      <li id="Hippie" class="tab text-center font-bold cursor-pointer">
         <p>Hippie</p>
       </li>
-      <li id="Yoda" class="text-center font-bold cursor-pointer">
-        <img src="images/yoda-response.webp" alt="Yoda" class="rounded-lg" />
+      <li id="Yoda" class="tab text-center font-bold cursor-pointer">
         <p>Yoda</p>
       </li>
     </ul>
 
-    <div id="app" class="felx flex-col items-center justify-between">
+    <div id="app" class="flex flex-col items-center justify-center m-auto max-w-screen-xl">
+
       <div id="chat_container" class="w-full h-full"></div>
-      <form class="w-full max-w-screen-xl p-5 bg-[#40414f] flex flex-col gap-2.5">
-        <p id="personality-selected"></p>
-        <input class="bg-[#40414f] border-none text-2xl text-center" type="text" name="personality" />
-        <div class="flex">
+
+      <form class="w-full max-w-screen-xl px-5 pb-2  bg-[#40414f] flex flex-col gap-2.5">
+        <input class="bg-[#40414f] invisible h-0" type="text" name="personality" />
+        <div class="flex flex-col sm:flex-row">
           <textarea
             class="w-full text-lg p-5 bg-transparent rounded-lg border border-[#fbfbfb] mr-4"
             name="prompt"
@@ -47,10 +66,11 @@
             col="1"
             placeholder="Ask the personality bot..."
           ></textarea>
-          <button type="submit" class="bg-[gold] rounded-lg text-[#0b0b0b] font-bold min-w-[72px]">Go!</button>
+          <button id="personality-selected" type="submit" class="bg-gradient-to-tr from-[gold] to-[#ffbe33] hover:from-yellow-300 hover:to-yellow-200 py-4 sm:py-0 mt-4 sm:mt-0 text-xl transition-colors rounded-lg text-[#0b0b0b] min-w-[72px]"></button>
         </div>
       </form>
     </div>
+
     <script type="module" src="script.js"></script>
   </body>
 </html>

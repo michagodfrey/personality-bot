@@ -5,31 +5,55 @@ import hippieImg from "/images/hippie-response.webp";
 import yodaImg from "/images/yoda-response.webp";
 import userImg from "/images/user-svgrepo-com.svg";
 
-const form = document.querySelector('form');
-const chatContainer = document.querySelector('#chat_container');
-const personalityInput = document.querySelector('input');
+// primer and prompts for open AI 
+const form = document.querySelector("form");
+const chatContainer = document.querySelector("#chat_container");
+const personalitySelected = document.querySelector("#personality-selected");
+const personalityInput = document.querySelector("input");
 
-const personalities = [
-  { name: "Robot", img: robotImg },
-  { name: "Superhero", img: superheroImg },
-  { name: "Pirate", img: pirateImg },
-  { name: "Hippie", img: hippieImg },
-  { name: "Yoda", img: yodaImg },
-];
-
-let botImg = robotImg;
+// animation interval 
 let loadInterval;
 
-personalityInput.value = "Robot";
+// object containing personalities and primers
+const personalities = [
+  {
+    name: "Robot",
+    img: robotImg,
+    primer:
+      "robot. Answer directly, matter-of-factly and robotically. Start each repsonse with: 'Processing data.... Analysis complete.' Then answer as technically as practical. Say 'Affirmative' or 'Negative' rather than 'Yes' or 'No'.",
+  },
+  {
+    name: "Superhero",
+    img: superheroImg,
+    primer:
+      "superhero. Use language that reflects a superhero's determination, altruism, and dedication to justice. Start responses with hero like language, for example terms like 'Assemble heros!', or 'With unwavering valor'.",
+  },
+  {
+    name: "Pirate",
+    img: pirateImg,
+    primer:
+      "pirate. Use lots of pirate sounding words like 'Ahoy, matey!', 'ye be [something related to prompt]', 'Arrr' etc. More examples: use 'ye' not 'you'. 'Be', not 'is, am, are' and 'seekin'' not 'seeking'.",
+  },
+  {
+    name: "Hippie",
+    img: hippieImg,
+    primer:
+      "hippie from the 60s. Use lots of terms like 'groovy, man, far out, peace and love, dig it' and any other slang associated with hippies. Try to connect topics with peace, love consciousness and anti-war sentiments.",
+  },
+  {
+    name: "Yoda",
+    img: yodaImg,
+    primer:
+      "Yoda, the character from Star Wars. Mix up your word order, e.g. 'Difficult it is' rather than 'It is difficult'. Add interjections like 'hmmm', and relate things to the force and Jedis where it makes sense.",
+  },
+];
 
-personalities.forEach((personalityObj) => {
-  const personalityButton = document.getElementById(personalityObj.name);
-  personalityButton.addEventListener("click", () => {
-    botImg = personalityObj.img;
-    personalityInput.value = personalityObj.name;
-  });
-});
+// set initial values to robot
+let botImg = robotImg;
+personalityInput.value = personalities[0].primer;
+personalitySelected.innerHTML = `Get <b>${personalities[0].name}</b> response!`;
 
+// 3 dot animation while fetching response
 function loader(element) {
   element.textContent = '';
 
@@ -42,6 +66,7 @@ function loader(element) {
   }, 300)
 }
 
+// response text is printed out rather than appearing all at once
 function typeText(element, text) {
   let index = 0;
 
@@ -55,6 +80,7 @@ function typeText(element, text) {
   }, 20)
 }
 
+// give each response a unique id
 function generateUniqueId() {
   const timestamp = Date.now();
   const randomNumber = Math.random();
@@ -63,30 +89,28 @@ function generateUniqueId() {
   return `id-${timestamp}-${hexadecimalString}`;
 }
 
+// display bot response
 function chatStripe (isAi, value, uniqueId) {
   return (
     `<div class="w-full p-4 ${isAi && 'bg-[#40414f]'}">
       <div class="w-full max-w-screen-xl flex items-start gap-2.5">
-        <div class="w-9 h-9 rounded-lg ${isAi ? 'bg-[#5436da]' : 'bg-[#10a37f]' }  flex justify-center items-center">
-          <img class="object-contain w-[60%] h-[60%]" src="${isAi ? botImg : userImg}" alt="${isAi ? 'bot' : 'user'}" />
-        </div>
-        <div class="text-xl max-w-full overflow-x-scroll whitespace-pre-wrap" id="${uniqueId}">${value}</div>
+          <img class="object-contain h-[50px] min-w-[50px]" src="${isAi ? botImg : userImg}" alt="${isAi ? 'bot' : 'user'}" />
+        <div class="message text-xl max-w-full overflow-x-scroll whitespace-pre-wrap" id="${uniqueId}">${value}</div>
       </div>
     </div>`
   )
 }
 
+// send prompt and personality to backend
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   const data = new FormData(form);
 
-  // user chatstripe
   chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
 
   form.reset();
 
-  // ai chatstrip
   const uniqueId = generateUniqueId();
   chatContainer.innerHTML += chatStripe(true, " ", uniqueId);
 
@@ -124,11 +148,66 @@ const handleSubmit = async (e) => {
   }
 }
 
+// handle submit with button 
 form.addEventListener('submit', handleSubmit);
 
+// submit with the enter key - keyCode - 13
 form.addEventListener('keyup', (e) => {
-  // 13 is the enter key
   if (e.keyCode === 13) {
     handleSubmit(e);  
   }
 })
+
+// slider and tabs
+const slidesContainer = document.getElementById("slides-container");
+const slide = document.querySelector(".slide");
+const prevButton = document.getElementById("slide-arrow-prev");
+const nextButton = document.getElementById("slide-arrow-next");
+
+const tabsContainer = document.querySelector(".tabs-container");
+const tabs = tabsContainer.querySelectorAll(".tab");
+let currentSlide = 0;
+
+// set personality by slide index
+function setPersBySlide(index) {
+  tabs.forEach((tab) => {
+    tab.classList.remove("active");
+  });
+
+  personalityInput.value = personalities[index].primer;
+  personalitySelected.innerHTML = `Get <b>${personalities[index].name}</b> response!`;
+  botImg = personalities[index].img;
+  tabs[index].classList.add("active");
+}
+
+// slider next button 
+nextButton.addEventListener("click", () => {
+  const slideWidth = slide.clientWidth;
+  slidesContainer.scrollLeft += slideWidth;
+
+  if (currentSlide < 4) {
+    currentSlide++;
+    setPersBySlide(currentSlide);
+  }
+});
+
+// slider prev button 
+prevButton.addEventListener("click", () => {
+  const slideWidth = slide.clientWidth;
+  slidesContainer.scrollLeft -= slideWidth;
+
+  if (currentSlide > 0) {
+    currentSlide--;
+    setPersBySlide(currentSlide);
+  }
+});
+
+// tab click
+tabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => {
+    const slideWidth = slide.clientWidth;
+    slidesContainer.scrollLeft = slideWidth * index;
+    currentSlide = index;
+    setPersBySlide(currentSlide);
+  });
+});
