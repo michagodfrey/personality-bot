@@ -20,7 +20,7 @@ const personalities = [
     name: "Robot",
     img: robotImg,
     primer:
-      "robot. Answer directly, matter-of-factly and robotically. Start each repsonse with: 'Processing data.... Analysis complete.' Then answer as technically as practical. Say 'Affirmative' or 'Negative' rather than 'Yes' or 'No'.",
+      "robot. Answer directly, matter-of-factly and robotically. Start each repsonse with: 'Processing data.... Analysis complete.' Then answer as technical as practical. Say 'Affirmative' or 'Negative' rather than 'Yes' or 'No'.",
   },
   {
     name: "Superhero",
@@ -107,7 +107,7 @@ const handleSubmit = async (e) => {
 
   const data = new FormData(form);
 
-  chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
+  chatContainer.innerHTML += chatStripe(false, data.get("prompt"));
 
   form.reset();
 
@@ -120,7 +120,9 @@ const handleSubmit = async (e) => {
 
   loader(messageDiv);
 
-  const response = await fetch("https://personality-bot.onrender.com/", {
+  // https://personality-bot.onrender.com/
+
+  const response = await fetch("http://localhost:5000/api", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -132,17 +134,17 @@ const handleSubmit = async (e) => {
   });
 
   clearInterval(loadInterval);
-  messageDiv.innerHTML = '';
+  messageDiv.innerHTML = "";
 
   if (response.ok) {
     const data = await response.json();
     const parsedData = data.bot.trim();
 
-    typeText(messageDiv, parsedData)
+    typeText(messageDiv, parsedData);
   } else {
     const error = await response.text();
 
-    messageDiv.innerHTML = "Something went wrong";
+    messageDiv.innerHTML = "Sorry, something went wrong :(";
     console.log(error);
     alert(error);
   }

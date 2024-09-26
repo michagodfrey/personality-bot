@@ -16,4 +16,7 @@
 
 .active {
   border-bottom: 4px solid gold;
+  @media (min-width: 768px) { 
+    color: gold; 
+  }
 }

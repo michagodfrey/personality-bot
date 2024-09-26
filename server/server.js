@@ -1,50 +1,57 @@
-import express from 'express';
-import * as dotenv from 'dotenv';
-import cors from 'cors';
-import { Configuration, OpenAIApi } from 'openai';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import OpenAI from "openai";
 
 dotenv.config();
-
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/', async (req, res) => {
-    res.status(200).send({
-      message: "Go to https://personality-bot.vercel.app/",
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+app.post("/api", async (req, res) => {
+  try {
+    const personality = req.body.personality;
+    const prompt = req.body.prompt;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      // prompt: `Answer the prompt as if you are a ${personality}. Prompt: ${prompt}`,
+      messages: [
+        {
+          role: "system",
+          content: `You are a ${personality}.`,
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      max_tokens: 600, // Adjust as needed to control cost: 1 token = 4 chars approx
+      temperature: 1.0, // Controls randomness in the model's output. A value of 1.0 means the bot will generate more creative, varied responses.
+      top_p: 1.0, // Controls diversity via nucleus sampling. A value like 0.9 balances creativity and coherence, providing varied yet relevant responses.
+      frequency_penalty: 0.3, // Penalized the for repeated phrases. 0.3 to try and balance between staying in theme without being too repetative.
+      presence_penalty: 0.3, // Encourages introducing new topics. 0.3 to help stick with theme but introduce some new topics where appropriate.
     });
+
+    const response = completion.choices[0].message.content;
+
+    res.status(200).json({ response });
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({
+        error: "An error occurred while communicating with the OpenAI API.",
+      });
+  }
 });
 
-app.post('/', async (req, res) => {
-    try {
-        const personality = req.body.personality;
-        const prompt = req.body.prompt;
-
-        const response = await openai.createCompletion({
-          model: "text-davinci-003",
-          prompt: `Answer the prompt as if you are a ${personality}. Prompt: ${prompt}`,
-          temperature: 1.0, // 0 - 1, higher = more random, lower = more repetative
-          max_tokens: 2048, // 1 token = 4 chars approx. Max tokens = 2048
-          top_p: 0, // 0 - 1 something about controling diversity via nucleus sampling ???
-          frequency_penalty: 0, // 0 - 2, higher values make the bot less repetative 
-          presence_penalty: 0, // 0 -2 Increases the likelihood to talk about new topics
-        });
-
-        res.status(200).send({
-            bot: response.data.choices[0].text
-        })
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({ error })
-    }
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-// app.listen(5000, () =>
-//   console.log("Server is listening on port 5000")
-// );
