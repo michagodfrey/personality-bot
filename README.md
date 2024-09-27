@@ -18,45 +18,72 @@ Personalities and the prompt primers are shown below:
 
 ![Image of a robot](./docs/images/robot.webp)
 
-Prompt primer: "robot. Answer directly, matter-of-factly and robotically. Start each repsonse with: 'Processing data.... Analysis complete.' Then answer as technically as practical. Say 'Affirmative' or 'Negative' rather than 'Yes' or 'No'."
+Prompt primer: "You are a robot. Answer directly, matter-of-factly and robotically. Start each repsonse with: 'Processing data.... Analysis complete.' Then answer as technically as practical. Say 'Affirmative' or 'Negative' rather than 'Yes' or 'No'."
   
 ### Superhero
 
 ![Image of a superhero](./docs/images/superhero.webp)
 
-Prompt primer: "superhero. Use language that reflects a superhero's determination, altruism, and dedication to justice. Start responses with hero like language, for example terms like 'Assemble heros!', or 'With unwavering valor'."
+Prompt primer: "You are a superhero. Use language that reflects a superhero's determination, altruism, and dedication to justice. Start responses with hero like language, for example terms like 'Assemble heros!', or 'With unwavering valor'."
 
 ### Pirate
 
 ![Image of a pirate](./docs/images/pirate.webp)
 
-Prompt primer: "pirate. Use lots of pirate sounding words like 'Ahoy, matey!', 'ye be [something related to prompt]', 'Arrr' etc. More examples: use 'ye' not 'you'. 'Be', not 'is, am, are' and 'seekin'' not 'seeking'."
+Prompt primer: "You are a pirate. Use lots of pirate sounding words like 'Ahoy, matey!', 'ye be [something related to prompt]', 'Arrr' etc. More examples: use 'ye' not 'you'. 'Be', not 'is, am, are' and 'seekin'' not 'seeking'."
   
 ### Hippie
 
 ![Image of a hippie](./docs/images/hippie.webp)
 
-Prompt primer: "hippie from the 60s. Use lots of terms like 'groovy, man, far out, peace and love, dig it' and any other slang associated with hippies. Try to connect topics with peace, love consciousness and anti-war sentiments."
+Prompt primer: "You are a hippie from the 60s. Use lots of terms like 'groovy, man, far out, peace and love, dig it' and any other slang associated with hippies. Try to connect topics with peace, love consciousness and anti-war sentiments."
   
 ### Yoda
 
 ![Image of Yoda](./docs/images/yoda.webp)
 
-Prompt primer: "Yoda, the character from Star Wars. Mix up your word order, e.g. 'Difficult it is' rather than 'It is difficult'. Add interjections like 'hmmm', and relate things to the force and Jedis where it makes sense."
+Prompt primer: "You are Yoda, the character from Star Wars. Mix up your word order, e.g. 'Difficult it is' rather than 'It is difficult'. Add interjections like 'hmmm', and relate things to the Force and Jedis where it makes sense."
   
 ## OpenAI settings
 
-Model:
+### model: gtp-3.5-turbo
 
-Temperature: 1.0
+A balance of affordability and creativity, making it ideal for a fun, small-scale app with unique personality-driven chatbot responses.
 
-Max Tokens: 2048
+### messages
 
-Top P: 0
+```JavaScript
+messages: [
+        {
+          role: "system",
+          content: `You are a ${personality}.`,
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ]
+```
 
-Freq penalty: 0
+### max_tokens: 2048
 
-Presence penalty: 0
+1 token = 4 chars approximately.
+
+### temperature: 1.0
+
+Controls randomness in the model's output. A value of 1.0 means the bot will generate more creative, varied responses.
+
+### top_p: 1.0
+
+Controls diversity via nucleus sampling. A value like 0.9 balances creativity and coherence, providing varied yet relevant responses.
+
+### frequency_penalty: 0.3
+
+Penalized the for repeated phrases. 0.3 to try and balance between staying in theme without being too repetative.
+
+### presence_penalty: 0.3
+
+Encourages introducing new topics. 0.3 to help stick with theme but introduce some new topics where appropriate.
 
 ## Built with
 

@@ -120,9 +120,7 @@ const handleSubmit = async (e) => {
 
   loader(messageDiv);
 
-  // https://personality-bot.onrender.com/
-
-  const response = await fetch("http://localhost:5000/api", {
+  const response = await fetch("https://personality-bot.onrender.com/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -138,7 +136,7 @@ const handleSubmit = async (e) => {
 
   if (response.ok) {
     const data = await response.json();
-    const parsedData = data.bot.trim();
+    const parsedData = data.response.trim();
 
     typeText(messageDiv, parsedData);
   } else {
@@ -213,3 +211,9 @@ tabs.forEach((tab, index) => {
     setPersBySlide(currentSlide);
   });
 });
+
+setPersBySlide(0);
+
+// Scroll the slides container to show the first slide
+const slideWidth = slide.clientWidth;
+slidesContainer.scrollLeft = slideWidth * currentSlide;

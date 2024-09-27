@@ -15,12 +15,10 @@ const openai = new OpenAI({
 
 app.post("/api", async (req, res) => {
   try {
-    const personality = req.body.personality;
-    const prompt = req.body.prompt;
+    const { personality, prompt } = req.body;
 
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      // prompt: `Answer the prompt as if you are a ${personality}. Prompt: ${prompt}`,
       messages: [
         {
           role: "system",
@@ -31,16 +29,16 @@ app.post("/api", async (req, res) => {
           content: prompt,
         },
       ],
-      max_tokens: 600, // Adjust as needed to control cost: 1 token = 4 chars approx
+      max_tokens: 2048, // Adjust as needed to control cost: 1 token = 4 chars approx
       temperature: 1.0, // Controls randomness in the model's output. A value of 1.0 means the bot will generate more creative, varied responses.
       top_p: 1.0, // Controls diversity via nucleus sampling. A value like 0.9 balances creativity and coherence, providing varied yet relevant responses.
       frequency_penalty: 0.3, // Penalized the for repeated phrases. 0.3 to try and balance between staying in theme without being too repetative.
       presence_penalty: 0.3, // Encourages introducing new topics. 0.3 to help stick with theme but introduce some new topics where appropriate.
     });
 
-    const response = completion.choices[0].message.content;
+    const aiResponse = completion.choices[0].message.content.trim();
 
-    res.status(200).json({ response });
+    res.status(200).json({ response: aiResponse });
   } catch (error) {
     console.error("Error:", error);
     res
