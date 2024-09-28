@@ -2,8 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
-    "server": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
