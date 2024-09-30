@@ -6,14 +6,18 @@ import OpenAI from "openai";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://personality-bot.vercel.app/",
+  })
+);
 app.use(express.json());
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.post("/api", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     const { personality, prompt } = req.body;
 
@@ -41,11 +45,11 @@ app.post("/api", async (req, res) => {
     res.status(200).json({ response: aiResponse });
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({
-        error: "An error occurred while communicating with the OpenAI API.",
-      });
+    res.status(500).json({
+      error: error.response
+        ? error.response.data
+        : "An unexpected error occurred.",
+    });
   }
 });
 

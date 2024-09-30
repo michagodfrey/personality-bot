@@ -142,9 +142,8 @@ const handleSubmit = async (e) => {
   } else {
     const error = await response.text();
 
-    messageDiv.innerHTML = "Sorry, something went wrong :(";
+    messageDiv.innerHTML = "An unexpected error occurred.";
     console.log(error);
-    alert(error);
   }
 }
 
@@ -158,17 +157,19 @@ form.addEventListener('keyup', (e) => {
   }
 })
 
-// slider and tabs
+// Slider and tabs
 const slidesContainer = document.getElementById("slides-container");
-const slide = document.querySelector(".slide");
+const slides = slidesContainer.querySelectorAll(".slide");
+const slide = slides[0]; // Reference to a single slide
 const prevButton = document.getElementById("slide-arrow-prev");
 const nextButton = document.getElementById("slide-arrow-next");
 
 const tabsContainer = document.querySelector(".tabs-container");
 const tabs = tabsContainer.querySelectorAll(".tab");
 let currentSlide = 0;
+const totalSlides = slides.length;
 
-// set personality by slide index
+// Set personality by slide index
 function setPersBySlide(index) {
   tabs.forEach((tab) => {
     tab.classList.remove("active");
@@ -180,40 +181,47 @@ function setPersBySlide(index) {
   tabs[index].classList.add("active");
 }
 
-// slider next button 
+// Slider next button
 nextButton.addEventListener("click", () => {
   const slideWidth = slide.clientWidth;
-  slidesContainer.scrollLeft += slideWidth;
-
-  if (currentSlide < 4) {
-    currentSlide++;
-    setPersBySlide(currentSlide);
-  }
+  currentSlide = (currentSlide + 1) % totalSlides;
+  slidesContainer.scrollTo({
+    left: slideWidth * currentSlide,
+    behavior: "smooth",
+  });
+  setPersBySlide(currentSlide);
 });
 
-// slider prev button 
+// Slider prev button
 prevButton.addEventListener("click", () => {
   const slideWidth = slide.clientWidth;
-  slidesContainer.scrollLeft -= slideWidth;
-
-  if (currentSlide > 0) {
-    currentSlide--;
-    setPersBySlide(currentSlide);
-  }
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  slidesContainer.scrollTo({
+    left: slideWidth * currentSlide,
+    behavior: "smooth",
+  });
+  setPersBySlide(currentSlide);
 });
 
-// tab click
+// Tab click
 tabs.forEach((tab, index) => {
   tab.addEventListener("click", () => {
     const slideWidth = slide.clientWidth;
-    slidesContainer.scrollLeft = slideWidth * index;
+    slidesContainer.scrollTo({
+      left: slideWidth * index,
+      behavior: "smooth",
+    });
     currentSlide = index;
     setPersBySlide(currentSlide);
   });
 });
 
-setPersBySlide(0);
+// Set initial personality and image on page load
+setPersBySlide(currentSlide);
 
 // Scroll the slides container to show the first slide
 const slideWidth = slide.clientWidth;
-slidesContainer.scrollLeft = slideWidth * currentSlide;
+slidesContainer.scrollTo({
+  left: slideWidth * currentSlide,
+  behavior: "smooth",
+});
