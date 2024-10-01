@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "https://personality-bot.vercel.app/",
+    origin: "https://personality-bot.vercel.app",
   })
 );
 app.use(express.json());
