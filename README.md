@@ -50,7 +50,7 @@ A balance of affordability and creativity, making it ideal for a fun, small-scal
 messages: [
         {
           role: "system",
-          content: `You are a ${personality}.`,
+          content: personality,
         },
         {
           role: "user",
@@ -90,6 +90,10 @@ React. Hosted by [Vercel](https://vercel.com/)
 ### Backend
 
 NodeJS and Express. Hosted by [Render](https://render.com/).
+
+## Next Steps
+
+I would like to improve the the display so the most recent message is displayed next to the chat container so they don't have to scroll to the top after a few messages.
 
 ## Acknowledgements
 

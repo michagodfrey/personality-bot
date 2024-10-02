@@ -17,6 +17,12 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+app.get("/", async (req, res) => {
+  res.status(200).send({
+    message: "Personality Bot is at https://personality-bot.vercel.app",
+  });
+});
+
 app.post("/", async (req, res) => {
   try {
     const { personality, prompt } = req.body;
@@ -26,7 +32,7 @@ app.post("/", async (req, res) => {
       messages: [
         {
           role: "system",
-          content: `You are a ${personality}.`,
+          content: personality,
         },
         {
           role: "user",
