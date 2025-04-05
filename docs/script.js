@@ -120,16 +120,19 @@ const handleSubmit = async (e) => {
 
   loader(messageDiv);
 
-  const response = await fetch("https://personality-bot.onrender.com", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      personality: data.get("personality"),
-      prompt: data.get("prompt"),
-    }),
-  });
+  const response = await fetch(
+    "https://personality-bot-production.up.railway.app/",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        personality: data.get("personality"),
+        prompt: data.get("prompt"),
+      }),
+    }
+  );
 
   clearInterval(loadInterval);
   messageDiv.innerHTML = "";
