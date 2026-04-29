@@ -1,31 +1,7 @@
 {
   "version": 2,
-  "build": {
-    "env": {
-      "NODE_VERSION": "22"
-    }
-  },
-  "builds": [
-    {
-      "src": "docs/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/docs/$1"
-    }
-  ]
+  "framework": null,
+  "installCommand": "npm install && cd docs && npm install",
+  "buildCommand": "cd docs && npm run build",
+  "outputDirectory": "docs/dist"
 }
