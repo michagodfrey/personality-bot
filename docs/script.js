@@ -121,7 +121,7 @@ const handleSubmit = async (e) => {
   loader(messageDiv);
 
   const response = await fetch(
-    "https://personality-bot-production.up.railway.app/",
+    "/api/chat",
     {
       method: "POST",
       headers: {
